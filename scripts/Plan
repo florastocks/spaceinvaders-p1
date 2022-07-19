@@ -1,0 +1,126 @@
+-- ?create the grid 
+--  ? use a for loop and the cellCount variable 
+--   ?create a new variable for creating new divs for each cellCount
+  -- ?give indiv cells dataset index of i - to give them numbers that can then be accessed for moving aliens around etc
+--   then add enemies function 
+
+-- gets the high score
+
+-- sets a high score 
+--   if current score > highest score, highest score = current score. 
+
+--   starts the game 
+--   adds correct amount of aliens to grid 
+--     num of aliens = width -3 
+
+-- moves the aliens 
+--   hile loop - while divs contain aliens: 
+--     move aliens one div at time to the right - in an interval of 2 seconds 
+--     if divs 14 contain alien - run function shiftDown()
+--     then move aliens one div at a time to the left - interval of 2 seconds 
+--     if divs 0 contain alien - run function shiftDown()
+
+--     function that moves aliens down a row - shiftDown()    
+--   drops alien bombs 
+--    give this more thought 
+--     random number to shoot back 
+-- removes aliens 
+-- ?moves the player 
+--   ?if statements - using keyCode for left and right keys - all others invalid keys
+--   if placebar hit run function playerShot()
+-- player shooting 
+--   space bar key code results in shot fired. 
+-- end the game
+--   clear the interval 
+  
+
+
+
+
+-- ! data 
+-- imgaes for enemy
+-- images for player 
+-- bakcground image 
+-- add sound to the background 
+
+
+
+-- !firing:
+-- needs to be on an quick interval 
+-- in each interval, shot moves down one square 
+-- if square shot moves into contains player - player looses a life 
+
+
+-- * --- order ---
+-- first need to target the elements that will be interacting with . 
+-- then will create variable needed
+
+-- ?create the grid and the div classes through js instead of hard code 
+--  ? will do this by using a function. going to use a for loop, with i being less then the cellCount (which is one of the variables)
+--   ?through each iteration of the loop, a cell (div) will be added to the grid using the createElement('div') and will be saved to a variable called cell. 
+--   ?will then add the index of each cell to the data attribute on the element y using .dataset.index = i
+--   ?these cells will then be added into the cell array, but pushing them into the array 
+--   ?then append the cells to the grid element by using appendChild. 
+--   at the end of this function we can call the function that adds aliens to the board. 
+
+-- create a function the will place the alien on the board
+--   start by just adding one alien to the board - and try get it to listen to the function that will make it move across and the down when it meets a wall 
+--   once that is working come back and create more aliens. 
+--   want length of enemy to be width - 3 - then they have move time to move across. 
+--   add aliens by putting a position placeholder into the function parentasis, then add the alien classlist to the the position of cell cells[position].classList.add('alien')
+--     make the aliens into a class, and add them into the grid in starting position - making them all a class means they can move in unison 
+
+-- make the function to get them to move across the board - and when they reach the sides, move down a row. 
+--   irst will need to remove alien function from current position - then run interval that will move the class across together
+--   needs to be an interval 
+--     needs to be an if statement inside of the interval - where if the currentposition of cells with the class of alien inside % width === width -1
+--     prevent them falling off the board. 
+--     move to all cells 1 to the right
+--     else move the cells down one 
+
+-- make the function that will end the game when the enemy reaches the final row 
+--   if stamtement that:
+--   needs to clear the enemy interval 
+--   and return to original setup 
+--     if enemy current position === bottom row (currentPosition + width <= cellCount - 1)- do the above. 
+--     will need a set timeout - that will then show the final score, once rest of the function had finished. 
+
+-- ?create the player 
+--   ?function addPlayer(position ){ cells[position].classList.add('player')}
+
+-- ?create the function that moves the player left and right. 
+--   ?first will remove player from current player location - then run if statements
+--   ?will need event listeners on left and right key, using the key codes 
+--   ?need to set it so they cannot move up of down off the bottom row - and cannot move off the board left and right 
+--     ?will be four if statements. 
+--     ?dont need up and down 
+--     ?after the if statment - call the player function to the current position
+--     ?eventListener = keydown 
+
+-- create function for player firing 
+--   will add an event listener to the keycode of the space bar. when space bar is hit, interval will begin, that moves the shot up the page 
+--   if a div ontains the enemy class at the shot travels up - then the enemy class is removed, and the shot class is removed - to prevent it for continuing up 
+--   the player will get 50 points per enemy hit. 
+--   vent listener needs to be key up - so they cant just continuously fire. 
+
+-- reate function for enemy firing
+--   will be an interval inside the function
+--   ill need a math.floor(math.random) * bottom row length- for only the bottom line of aliens 
+--   this will pick out a random alien, which from the row below that position - a shot will be fired down on an interval - until it reaches the bottom
+--   if the player is hit - then a life is lost and remove shot class 
+--     pdate the innerHTML of the lives 
+
+-- unction to set high scroe: 
+--   if current score > highest score, update highest score with current score. 
+
+
+--   all the above needs to be inside of the createGrid function. 
+
+
+--  !if get all the above done:
+-- ! ---- possible extras -----
+
+-- add a landing page with the instructions and move the start button to the page 
+--  if the player wins - they move to level two, where the interval for the aliens to move becomes less, along with the aliens firing time. 
+
+

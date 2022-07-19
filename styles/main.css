@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.controls-wrapper {
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 600px;
+  margin: 0 auto;
+}
+#start{
+  height: 40px;
+  width: 120px;
+  }
+
+.grid-wrapper {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#lives-display{
+  font-size: 40px;
+  margin: 0 auto;
+}
+
+.grid {
+  margin: 0 auto;
+  align-items: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  height: 80vh;
+  width: 600px;
+}
+
+.grid div {
+  border: 1px solid lightgrey;
+  flex-grow: 1;
+  height: 6.66666667%; 
+  width: 6.66666667%;
+}
+
+.grid div.crab {
+  background-image: url('../images/little-crab.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.shark {
+  background-image: url('../images/big-shark.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
