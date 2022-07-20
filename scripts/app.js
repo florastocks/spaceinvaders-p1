@@ -138,6 +138,8 @@ function init() {
               let hit = enemyCurrentPos.indexOf(shotCurrentPos)
               console.log(hit)
               delete enemyCurrentPos[hit]
+              clearInterval(timer2)
+              removeShoot(shotCurrentPos)
             }
             //? tried to so shotCurrentPos === enemyCurrentPos
             //? tried enemyCurrentPos.some(shotCurrentPos)
