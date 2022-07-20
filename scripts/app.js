@@ -134,7 +134,14 @@ function init() {
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
             playerShoot(shotCurrentPos)
-
+            if(enemyCurrentPos.includes(shotCurrentPos)){
+              let hit = enemyCurrentPos.indexOf(shotCurrentPos)
+              console.log(hit)
+              delete enemyCurrentPos[hit]
+            }
+            //? tried to so shotCurrentPos === enemyCurrentPos
+            //? tried enemyCurrentPos.some(shotCurrentPos)
+            //?tried enemyCurrentPos.includes(shotCurrentPos)
 
             // }
             // if shotCurrentPos includes class enemy
