@@ -5,7 +5,11 @@
 body {
   height: 100vh;
   margin: 0;
+  background-image: url('../images/undersea_tretana2.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 
 .controls-wrapper {
   height: 10vh;
@@ -54,6 +58,12 @@ body {
 
 .grid div.crab {
   background-image: url('../images/little-crab.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.bullet {
+  background-image: url('../images/laser-shot-png-png-image-916579.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
