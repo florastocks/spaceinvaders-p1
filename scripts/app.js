@@ -133,23 +133,25 @@ function init() {
             // }else{
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
+            console.log('moved up')
             playerShoot(shotCurrentPos)
+
             if(enemyCurrentPos.includes(shotCurrentPos)){
               let hit = enemyCurrentPos.indexOf(shotCurrentPos)
               console.log(hit)
-              delete enemyCurrentPos[hit]
+              // console.log('enemy in square')
+              enemyCurrentPos.splice(hit, 1)
+              //? also used delete enemyCurrentPos[hit]
+              // console.log('enemy removed')
               clearInterval(timer2)
+              // console.log('interval cleared')
               removeShoot(shotCurrentPos)
             }
-            //? tried to so shotCurrentPos === enemyCurrentPos
-            //? tried enemyCurrentPos.some(shotCurrentPos)
-            //?tried enemyCurrentPos.includes(shotCurrentPos)
-
             // }
             // if shotCurrentPos includes class enemy
             //get the index of that position
             //delete that index from the enemy current pos array. 
-          }, 200)
+          }, 1000)
         }
         
       }
@@ -207,7 +209,7 @@ function init() {
             }
             
           }
-      }, 400)
+      }, 1000)
       
     }
 
@@ -255,3 +257,5 @@ document.addEventListener('DOMContentLoaded', init)
 
 
 //! give different rows different arrays and append to starting pos array.
+
+//! how to stop firing when am not hitting the space back 
