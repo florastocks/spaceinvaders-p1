@@ -3,7 +3,7 @@ function init() {
   // ?  To grab 
   const grid = document.querySelector('.grid')
   const start = document.querySelector('#start')
-  // high score 
+  const highScoreDisplay = document.querySelector('#high-score')
   // score 
   // lives display
   // divs 
@@ -30,21 +30,32 @@ function init() {
   const shotStartPos = playerCurrentPos - width
   let shotCurrentPos
   const enemy = 'shark'
-  const enemyStartPos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const enemyStartPos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   let enemyCurrentPos = enemyStartPos
 
 
   // ! On page load 
-  // the high scorefrom local storage 
+  highScoreDisplay.innerHTML = getHighScore()
   // landing page 
 
   // ! Executions
   // ? functions 
+  function getHighScore(){
+    return localStorage.getItem('spaceinvaders-p1-high-score') ? parseFloat(localStorage.getItem('spaceinvaders-p1-high-score')) : 0
+  }
+
+  function setHighScore(score){
+    if(!getHighScore() || getHighScore() < score){
+      localStorage.setItem('spaceinvaders-p1-high-score', score)
+      highScoreDisplay.innerHTML = getHighScore()
+    }
+  }
+
 
   function createGrid(){
     for(let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
-      cell.innerHTML = i
+      // cell.innerHTML = i
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell)
@@ -133,10 +144,7 @@ function init() {
         enemyCurrentPos.forEach((position, index) => {
           removeShark(position)
         })
-        
-// ? direction down isnt needed
-        
-                
+      
         if(direction === 'right'){
           let nextMove = enemyCurrentPos.every(index => index % width !== width - 1)
           if(nextMove){
@@ -145,11 +153,16 @@ function init() {
               addShark(enemyCurrentPos[index])
             })
           }else{
-            enemyCurrentPos.forEach((num, index) => {
-              enemyCurrentPos[index] = num + width   
-              addShark(enemyCurrentPos[index])
-            })
+            let nextMove = enemyCurrentPos.every(index => index + width <= cellCount - width)
+            if(nextMove){
+              enemyCurrentPos.forEach((num, index) => {
+                enemyCurrentPos[index] = num + width   
+                addShark(enemyCurrentPos[index])
+              })
             direction = 'left'
+            }else{
+              endGame()
+            }
           }
         }else {// left
           let nextMove = enemyCurrentPos.every(index => index % width !== 0)
@@ -159,27 +172,41 @@ function init() {
               addShark(enemyCurrentPos[index])
             })
           }else{
-            enemyCurrentPos.forEach((num, index) => {
-              enemyCurrentPos[index] = num + width   
-              //stop moving down 
-              //end game 
-              addShark(enemyCurrentPos[index])
-            })
-            direction = 'right'
+            let nextMove = enemyCurrentPos.every(index => index + width <= cellCount - width)
+            if(nextMove){
+              enemyCurrentPos.forEach((num, index) => {
+                enemyCurrentPos[index] = num + width   
+                addShark(enemyCurrentPos[index])
+                })
+                direction = 'right'
+              }else{
+                endGame()
+              }
+              
+            }
+            
           }
-        }
       }, 400)
+      
     }
 
-  // create an array of starting pos - aliens - makes them move as a pac
-  //check they can all move - not just some - every()
-  //if true then can move right +1
-  // if false move down if can!! 
-  // change the variable to be left 
-  //if variable == left check if all items in the array can move left - if they can currentposition +1 
-  // if false - move down - and swap the variable to right 
-  //if variable = right etc etc/ 
+  //! --- End Game ---
+  function endGame(){
+    clearInterval(timer)
 
+    removeCrab(playerCurrentPos)
+
+    enemyCurrentPos.forEach((position, index) => {
+      removeShark(position)
+    })
+
+    setTimeout(() => {
+      // Alert score
+      alert(score)
+      // Update high score
+      setHighScore(score)
+    }, 50)
+  }
 
 
 
