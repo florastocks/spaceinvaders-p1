@@ -30,9 +30,13 @@ function init() {
   const shotStartPos = playerCurrentPos - width
   let shotCurrentPos = shotStartPos
   const enemy = 'shark'
-  const enemyStartPos = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+  const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+  const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+  const enemyStartPos = row1.concat(row2,row3)
   let enemyCurrentPos = enemyStartPos
 
+  console.log(enemyStartPos)
 
   // ! On page load 
   // landing page 
@@ -129,11 +133,6 @@ function init() {
 
         if(space === keyCode){
           timer2 = setInterval(() => {
-            // if(shotCurrentPos.includes(enemy)){
-            //   removeShark(shotCurrentPos)
-            //   clearInterval(timer2)
-            // }else{
-            // removeShoot(shotCurrentPos)
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
             console.log('moved up')
@@ -217,7 +216,7 @@ function init() {
             }
             
           }
-      }, 400)
+      }, 600)
       
     }
 
@@ -270,3 +269,5 @@ document.addEventListener('DOMContentLoaded', init)
 
 //Math.random - index 24-35
 // if 
+
+//? need to cut background of lazers 
