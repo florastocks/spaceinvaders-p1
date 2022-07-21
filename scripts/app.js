@@ -3,7 +3,7 @@ function init() {
   // ?  To grab 
   const grid = document.querySelector('.grid')
   const start = document.querySelector('#start')
-  const highScoreDisplay = document.querySelector('#high-score')
+  const scoreDisplay = document.querySelector('#score')
   // score 
   // lives display
   // divs 
@@ -35,21 +35,11 @@ function init() {
 
 
   // ! On page load 
-  highScoreDisplay.innerHTML = getHighScore()
   // landing page 
 
   // ! Executions
   // ? functions 
-  function getHighScore(){
-    return localStorage.getItem('spaceinvaders-p1-high-score') ? parseFloat(localStorage.getItem('spaceinvaders-p1-high-score')) : 0
-  }
-
-  function setHighScore(score){
-    if(!getHighScore() || getHighScore() < score){
-      localStorage.setItem('spaceinvaders-p1-high-score', score)
-      highScoreDisplay.innerHTML = getHighScore()
-    }
-  }
+ 
 
 
   function createGrid(){
@@ -137,12 +127,13 @@ function init() {
       
         playerShoot(shotCurrentPos)
 
-        if(space === keyCode && shotCurrentPos >= width){
+        if(space === keyCode){
           timer2 = setInterval(() => {
             // if(shotCurrentPos.includes(enemy)){
             //   removeShark(shotCurrentPos)
             //   clearInterval(timer2)
             // }else{
+            // removeShoot(shotCurrentPos)
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
             console.log('moved up')
@@ -151,17 +142,19 @@ function init() {
             if(enemyCurrentPos.includes(shotCurrentPos)){
               let hit = enemyCurrentPos.indexOf(shotCurrentPos)
               console.log(hit)
-              // console.log('enemy in square')
               enemyCurrentPos.splice(hit, 1)
+              score += 50
+              scoreDisplay.innerHTML = score
               //? also used delete enemyCurrentPos[hit]
-              // console.log('enemy removed')
               clearInterval(timer2)
-              // console.log('interval cleared')
               removeShoot(shotCurrentPos)
-            }else if(enemyCurrentPos <= width){
+            }else if(shotCurrentPos <= width){
               clearInterval(timer2)
               removeShoot(shotCurrentPos)
             }
+
+            //? add score into this function 
+            //?
             // }
             // if shotCurrentPos includes class enemy
             //get the index of that position
