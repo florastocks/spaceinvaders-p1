@@ -116,7 +116,19 @@ function init() {
         }
     addCrab(playerCurrentPos)
     }
+//! -- Events --- 
+    function keys(event){
+        const keyCode = event.keyCode 
+        const left = 37
+        const right = 39
+        const space = 32
 
+        if(space === keyCode){
+          playerFire(event)
+        }else if( keyCode === left || keyCode === right){
+          playerMove(event)
+        }
+    }
   // !
     function playerFire(event){
         console.log('player firing')
@@ -146,14 +158,17 @@ function init() {
               clearInterval(timer2)
               // console.log('interval cleared')
               removeShoot(shotCurrentPos)
+            }else if(enemyCurrentPos <= width){
+              clearInterval(timer2)
+              removeShoot(shotCurrentPos)
             }
             // }
             // if shotCurrentPos includes class enemy
             //get the index of that position
             //delete that index from the enemy current pos array. 
-          }, 1000)
+          }, 200)
         }
-        
+        shotCurrentPos = playerCurrentPos - width
       }
       // create arrays for each position that the crab could be in - then if the array contais a shark - romove if from the sharl current pos array 
       
@@ -209,14 +224,14 @@ function init() {
             }
             
           }
-      }, 1000)
+      }, 400)
       
     }
 
   //! --- End Game ---
   function endGame(){
     clearInterval(timer)
-
+    clearInterval(timer2)
     removeCrab(playerCurrentPos)
 
     enemyCurrentPos.forEach((position, index) => {
@@ -239,8 +254,8 @@ function init() {
 
 
 
-  document.addEventListener('keyup', playerFire)
-  document.addEventListener('keydown', playerMove)
+  // document.addEventListener('keyup', playerFire)
+  document.addEventListener('keydown', keys)
   start.addEventListener('click', startGame)
   }
   createGrid()
@@ -259,3 +274,6 @@ document.addEventListener('DOMContentLoaded', init)
 //! give different rows different arrays and append to starting pos array.
 
 //! how to stop firing when am not hitting the space back 
+
+//Math.random - index 24-35
+// if 
