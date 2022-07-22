@@ -4,7 +4,9 @@ function init() {
   const grid = document.querySelector('.grid')
   const start = document.querySelector('#start')
   const scoreDisplay = document.querySelector('#score')
+  const livesDisplay = document.getElementById('lives-display')
   // score 
+
   // lives display
   // divs 
 
@@ -17,7 +19,7 @@ function init() {
   let direction = 'right'
   // timer - to be able to end intervals 
   let score = 0
-  // lives 
+  let lives = 3
   //hightest score
   
 
@@ -38,13 +40,15 @@ function init() {
 
   console.log(enemyStartPos)
 
+  //? 36
+  //? indexs - 24-36
+
+
   // ! On page load 
   // landing page 
 
   // ! Executions
-  // ? functions 
- 
-
+  // ? functions
 
   function createGrid(){
     for(let i = 0; i < cellCount; i++){
@@ -93,6 +97,14 @@ function init() {
       cells[position].classList.remove(enemy)
     }
 
+  //? enemy fire
+  function enemyShoot(position){
+    cells[position].classList.add('beam')
+  }
+  function removeEnemyFire(position){
+    cells[position].classList.remove('beam')
+  }
+
   //! moving the player left and right
     function playerMove(event){
       const keyCode = event.keyCode 
@@ -128,14 +140,24 @@ function init() {
         console.log('player firing')
         const keyCode = event.keyCode
         const space = 32
-      
+        let timer2
+        let shotCurrentPos = playerCurrentPos - width
+
         playerShoot(shotCurrentPos)
 
         if(space === keyCode){
           timer2 = setInterval(() => {
+
+            if(shotCurrentPos <= width){
+              clearInterval(timer2)
+              removeShoot(shotCurrentPos)
+              return
+            }
+
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
             console.log('moved up')
+
             playerShoot(shotCurrentPos)
 
             if(enemyCurrentPos.includes(shotCurrentPos)){
@@ -144,23 +166,11 @@ function init() {
               enemyCurrentPos.splice(hit, 1)
               score += 50
               scoreDisplay.innerHTML = score
-              //? also used delete enemyCurrentPos[hit]
-              clearInterval(timer2)
-              removeShoot(shotCurrentPos)
-            }else if(shotCurrentPos <= width){
               clearInterval(timer2)
               removeShoot(shotCurrentPos)
             }
-
-            //? add score into this function 
-            //?
-            // }
-            // if shotCurrentPos includes class enemy
-            //get the index of that position
-            //delete that index from the enemy current pos array. 
           }, 200)
         }
-        shotCurrentPos = playerCurrentPos - width
       }
       // create arrays for each position that the crab could be in - then if the array contais a shark - romove if from the sharl current pos array 
       
@@ -171,10 +181,9 @@ function init() {
       clearInterval(timer)
       
       timer = setInterval(()=> {
-        enemyCurrentPos.forEach((position, index) => {
-          removeShark(position)
+        cells.forEach((cell) => {
+          cell.classList.remove('shark')
         })
-      
         if(direction === 'right'){
           let nextMove = enemyCurrentPos.every(index => index % width !== width - 1)
           if(nextMove){
@@ -190,8 +199,16 @@ function init() {
                 addShark(enemyCurrentPos[index])
               })
             direction = 'left'
-            }else{
-              endGame()
+            }else if (enemyCurrentPos.some(index => index + width === cellCount - width)){
+              console.log('some have hit the bootom')
+                if(lives === 0){
+                  return endGame()
+                }
+              // clearInterval(timer)
+              // resetVariable()
+              // lives --
+              // livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+              return resetVariable()
             }
           }
         }else {// left
@@ -209,21 +226,80 @@ function init() {
                 addShark(enemyCurrentPos[index])
                 })
                 direction = 'right'
-              }else{
-                endGame()
+              }else if (enemyCurrentPos.some(index => index + width === cellCount - width)){
+                console.log('some have hit the bootom')
+                if(lives === 0){
+                  return endGame()
+                }
+              // clearInterval(timer)
+              // lives --
+              // livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+              return resetVariable()
               }
-              
             }
-            
           }
-      }, 600)
+          enemyFire()
+      }, 1300)
       
     }
 
+    function resetVariable(){
+      console.log('variables have reset')
+      lives --
+      livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+
+      let timer
+      let enemyPrevPos 
+      let direction = 'right'
+    
+      const playerStartPos = 217
+      let playerCurrentPos = playerStartPos
+      const shotStartPos = playerCurrentPos - width
+      let shotCurrentPos = shotStartPos
+      const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+      const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+      const enemyStartPos = row1.concat(row2,row3)
+      let enemyCurrentPos = enemyStartPos
+
+      startGame()
+      }
+
+  //! --- Fire From -- 
+  function enemyFire(){
+    fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
+    console.log('player firing')
+    let timer3
+    let enemyShot = fireFrom + width
+
+    enemyShoot(enemyShot)
+      timer3 = setInterval(() => {
+          if(enemyShot > cellCount - width){
+            clearInterval(timer3)
+            removeEnemyFire(enemyShot)
+            return
+          }
+
+          removeEnemyFire(enemyShot)
+          enemyShot += width
+          console.log('moved down')
+
+          enemyShoot(enemyShot)
+
+          if(playerCurrentPos.includes(enemyShot)){
+            let target = playerCurrentPos.indexOf(enemyShot)
+            console.log(target)
+            enemyCurrentPos.splice(target, 1)
+            lives --
+            livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+            clearInterval(timer3)
+            removeEnemyFire(enemyShot)
+          }
+        }, 400)
+    }
   //! --- End Game ---
   function endGame(){
     clearInterval(timer)
-    clearInterval(timer2)
     removeCrab(playerCurrentPos)
 
     enemyCurrentPos.forEach((position, index) => {
@@ -234,7 +310,6 @@ function init() {
       // Alert score
       alert(score)
       // Update high score
-      setHighScore(score)
     }, 50)
   }
 
@@ -250,8 +325,9 @@ function init() {
   document.addEventListener('keydown', keys)
   start.addEventListener('click', startGame)
   }
-  createGrid()
 
+  createGrid()
+  
 
 }
 
@@ -271,3 +347,6 @@ document.addEventListener('DOMContentLoaded', init)
 // if 
 
 //? need to cut background of lazers 
+
+
+//? 

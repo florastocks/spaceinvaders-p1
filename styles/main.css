@@ -63,13 +63,19 @@ body {
 }
 
 .grid div.bullet {
-  background-image: url('../images/red-laser-beam-png-png-download-colorfulness-11562893668g2hzexg23n\ \(1\).png');
+  background-image: url('../images/red\ laser.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .grid div.shark {
   background-image: url('../images/big-shark.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.beam {
+  background-image: url('../images/laser-shot-png-png-image-916579.png');
   background-repeat: no-repeat;
   background-size: contain;
 }
