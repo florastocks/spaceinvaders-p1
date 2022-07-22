@@ -23,6 +23,8 @@ body {
 #start{
   height: 40px;
   width: 120px;
+  background-color: transparent;
+  box-shadow: aqua;
   }
 
 .grid-wrapper {
@@ -47,6 +49,7 @@ body {
   justify-content: center;
   height: 80vh;
   width: 600px;
+  border: none;
 }
 
 .grid div {
@@ -54,6 +57,7 @@ body {
   flex-grow: 1;
   height: 6.66666667%; 
   width: 6.66666667%;
+  border: none;
 }
 
 .grid div.crab {

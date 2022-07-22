@@ -53,7 +53,7 @@ function init() {
   function createGrid(){
     for(let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
-      cell.innerHTML = i
+      // cell.innerHTML = i
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell)
@@ -243,59 +243,63 @@ function init() {
       
     }
 
-    function resetVariable(){
-      console.log('variables have reset')
-      lives --
-      livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
+    // function resetVariable(){
+    //   console.log('variables have reset')
+    //   lives --
+    //   livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
 
-      let timer
-      let enemyPrevPos 
-      let direction = 'right'
+    //   let timer
+    //   let enemyPrevPos 
+    //   let direction = 'right'
     
-      const playerStartPos = 217
-      let playerCurrentPos = playerStartPos
-      const shotStartPos = playerCurrentPos - width
-      let shotCurrentPos = shotStartPos
-      const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-      const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-      const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
-      const enemyStartPos = row1.concat(row2,row3)
-      let enemyCurrentPos = enemyStartPos
+    //   const playerStartPos = 217
+    //   let playerCurrentPos = playerStartPos
+    //   const shotStartPos = playerCurrentPos - width
+    //   let shotCurrentPos = shotStartPos
+    //   const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    //   const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+    //   const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+    //   const enemyStartPos = row1.concat(row2,row3)
+    //   let enemyCurrentPos = enemyStartPos
 
-      startGame()
-      }
+    //   startGame()
+    //   }
 
   //! --- Fire From -- 
   function enemyFire(){
-    fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
+
+    let fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
     console.log('player firing')
     let timer3
-    let enemyShot = fireFrom + width
-
+    let enemyShot = enemyCurrentPos[fireFrom] + width
+    console.log(enemyShot, fireFrom)
+    // clearInterval(timer3)
     enemyShoot(enemyShot)
+
       timer3 = setInterval(() => {
+
+        removeEnemyFire(enemyShot)
+        enemyShot += width
+        console.log('moved down')
           if(enemyShot > cellCount - width){
             clearInterval(timer3)
-            removeEnemyFire(enemyShot)
             return
+          }else{
+            enemyShoot(enemyShot)
           }
-
-          removeEnemyFire(enemyShot)
-          enemyShot += width
-          console.log('moved down')
-
-          enemyShoot(enemyShot)
-
-          if(playerCurrentPos.includes(enemyShot)){
-            let target = playerCurrentPos.indexOf(enemyShot)
+          if(cells[enemyShot].classList.contains(playerChar)){
+            console.log('enemy shot player')
+            let target = enemyShot.indexOf(playerChar)
             console.log(target)
-            enemyCurrentPos.splice(target, 1)
-            lives --
+            removeCrab(target)
+            lives -= 1
             livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
             clearInterval(timer3)
             removeEnemyFire(enemyShot)
           }
+
         }, 400)
+      
     }
   //! --- End Game ---
   function endGame(){
@@ -349,4 +353,4 @@ document.addEventListener('DOMContentLoaded', init)
 //? need to cut background of lazers 
 
 
-//? 
+//? if cells.every doesnt include a shark div - then player wins!! 
