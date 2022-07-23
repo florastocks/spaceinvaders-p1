@@ -231,7 +231,7 @@ function init() {
             }
           }
           enemyFire()
-      }, 1000)
+      }, 750)
       
     }
 
@@ -255,7 +255,7 @@ function init() {
             return
           }
 
-          console.log(enemyShot)
+          // console.log(enemyShot)
           removeEnemyFire(enemyShot)
           enemyShot += width
           

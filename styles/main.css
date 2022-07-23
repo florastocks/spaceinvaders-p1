@@ -1,5 +1,8 @@
 * {
   box-sizing: border-box;
+  font-family: 'Rubik Bubbles', cursive;
+  font-size: 16px;
+  color: #0e5369;
 }
 
 body {
@@ -24,7 +27,10 @@ body {
   height: 40px;
   width: 120px;
   background-color: transparent;
-  box-shadow: aqua;
+  border: none;
+  box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%);
+  cursor: pointer;
+  font-size: 16px;
   }
 
 .grid-wrapper {
@@ -42,7 +48,7 @@ body {
 .grid {
   margin: 0 auto;
   align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-wrap: wrap;
   height: 100%;
