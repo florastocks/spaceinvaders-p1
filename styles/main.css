@@ -76,6 +76,7 @@ body {
   background-image: url('../images/red\ laser.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
 }
 
 .grid div.shark {
@@ -88,4 +89,5 @@ body {
   background-image: url('../images/laser-shot-png-png-image-916579.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
 }
