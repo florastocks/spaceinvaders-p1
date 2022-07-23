@@ -15,6 +15,8 @@ function init() {
   const cellCount = width * width 
   const cells = []
   let timer
+  let timer2
+  let timer3
   let enemyPrevPos 
   let direction = 'right'
   // timer - to be able to end intervals 
@@ -32,13 +34,14 @@ function init() {
   const shotStartPos = playerCurrentPos - width
   let shotCurrentPos = shotStartPos
   const enemy = 'shark'
+  const enemyBullet = 'beam'
   const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
   const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
   const enemyStartPos = row1.concat(row2,row3)
   let enemyCurrentPos = enemyStartPos
 
-  console.log(enemyStartPos)
+  // console.log(enemyStartPos)
 
   //? 36
   //? indexs - 24-36
@@ -99,10 +102,10 @@ function init() {
 
   //? enemy fire
   function enemyShoot(position){
-    cells[position].classList.add('beam')
+    cells[position].classList.add(enemyBullet)
   }
   function removeEnemyFire(position){
-    cells[position].classList.remove('beam')
+    cells[position].classList.remove(enemyBullet)
   }
 
   //! moving the player left and right
@@ -114,10 +117,10 @@ function init() {
     removeCrab(playerCurrentPos)
 
       if (left === keyCode && playerCurrentPos % width !== 0){
-        console.log('CLICKED LEFT')
+        // console.log('CLICKED LEFT')
         playerCurrentPos -= 1
       }else if (right === keyCode && playerCurrentPos % width !== width - 1){
-        console.log('CLICKED RIGHT')
+        // console.log('CLICKED RIGHT')
         playerCurrentPos += 1
         }
     addCrab(playerCurrentPos)
@@ -137,7 +140,7 @@ function init() {
     }
   // !
     function playerFire(event){
-        console.log('player firing')
+        // console.log('player firing')
         const keyCode = event.keyCode
         const space = 32
         let timer2
@@ -156,13 +159,17 @@ function init() {
 
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
-            console.log('moved up')
+            // console.log('moved up')
 
             playerShoot(shotCurrentPos)
-
-            if(enemyCurrentPos.includes(shotCurrentPos)){
+            if (enemyCurrentPos.length === 0){
+              console.log('enemy array is empty')
+              clearInterval(timer2)
+              alert('🤩!!!!PLAYER WINS!!!!🤩')
+              endGame()
+            }else if(enemyCurrentPos.includes(shotCurrentPos)){
               let hit = enemyCurrentPos.indexOf(shotCurrentPos)
-              console.log(hit)
+              // console.log(hit)
               enemyCurrentPos.splice(hit, 1)
               score += 50
               scoreDisplay.innerHTML = score
@@ -200,17 +207,9 @@ function init() {
               })
             direction = 'left'
             }else if (enemyCurrentPos.some(index => index + width === cellCount - width)){
-              console.log('some have hit the bootom')
-                if(lives === 0){
                   return endGame()
                 }
-              // clearInterval(timer)
-              // resetVariable()
-              // lives --
-              // livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
-              return resetVariable()
             }
-          }
         }else {// left
           let nextMove = enemyCurrentPos.every(index => index % width !== 0)
           if(nextMove){
@@ -227,94 +226,83 @@ function init() {
                 })
                 direction = 'right'
               }else if (enemyCurrentPos.some(index => index + width === cellCount - width)){
-                console.log('some have hit the bootom')
-                if(lives === 0){
                   return endGame()
-                }
-              // clearInterval(timer)
-              // lives --
-              // livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
-              return resetVariable()
               }
             }
           }
-          enemyFire()
-      }, 1300)
+          // enemyFire()
+      }, 1000)
       
     }
 
-    // function resetVariable(){
-    //   console.log('variables have reset')
-    //   lives --
-    //   livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
-
-    //   let timer
-    //   let enemyPrevPos 
-    //   let direction = 'right'
-    
-    //   const playerStartPos = 217
-    //   let playerCurrentPos = playerStartPos
-    //   const shotStartPos = playerCurrentPos - width
-    //   let shotCurrentPos = shotStartPos
-    //   const row1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-    //   const row2 = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-    //   const row3 = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
-    //   const enemyStartPos = row1.concat(row2,row3)
-    //   let enemyCurrentPos = enemyStartPos
-
-    //   startGame()
-    //   }
 
   //! --- Fire From -- 
-  function enemyFire(){
+  // function enemyFire(){
 
-    let fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
-    console.log('player firing')
-    let timer3
-    let enemyShot = enemyCurrentPos[fireFrom] + width
-    console.log(enemyShot, fireFrom)
-    // clearInterval(timer3)
-    enemyShoot(enemyShot)
+    // let fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
+    // // console.log('player firing')
+    // // let timer3
+    // let enemyShot = enemyCurrentPos[fireFrom] + width
+    // // console.log(enemyShot, fireFrom)
+    // // clearInterval(timer3)
+    // enemyShoot(enemyShot)
+    // // if(enemyShot < cellCount - width){
+    //   // removeEnemyFire(enemyShot)
+    //   timer3 = setInterval(() => {
+          
+    //       if(enemyShot + width >= cellCount - width){
+    //         removeEnemyFire(enemyShot)
+    //       }
+    //       removeEnemyFire(enemyShot)
+    //       enemyShot += width
+          
 
-      timer3 = setInterval(() => {
-
-        removeEnemyFire(enemyShot)
-        enemyShot += width
-        console.log('moved down')
-          if(enemyShot > cellCount - width){
-            clearInterval(timer3)
-            return
-          }else{
-            enemyShoot(enemyShot)
-          }
-          if(cells[enemyShot].classList.contains(playerChar)){
-            console.log('enemy shot player')
-            let target = enemyShot.indexOf(playerChar)
-            console.log(target)
-            removeCrab(target)
-            lives -= 1
-            livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔'
-            clearInterval(timer3)
-            removeEnemyFire(enemyShot)
-          }
-
-        }, 400)
-      
-    }
+    //       if(cells[enemyShot].classList.contains(playerChar)){
+    //           lives --
+    //           livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔' 
+    //           removeEnemyFire(enemyShot)
+    //           clearInterval(timer3)
+    //         }else if(lives === 0){
+    //           clearInterval(timer3)
+    //           return endGame()
+    //         }else{
+    //           enemyShoot(enemyShot)
+    //         }
+    //       }, 400)
+    //     }
+    // }else if(cells[enemyShot].classList.contains(playerChar)){
+    //   lives --
+    //   livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔' 
+    //   clearInterval(timer3)
+            // removeEnemyFire(enemyShot)
+    
+  
+            // console.log('enemy shot player')
+            // let target = enemyShot.indexOf(playerChar)
+            // console.log(target)
+            // removeCrab(target)
+  
   //! --- End Game ---
   function endGame(){
-    clearInterval(timer)
-    removeCrab(playerCurrentPos)
-
-    enemyCurrentPos.forEach((position, index) => {
+    // clearInterval(timer3)
+  enemyCurrentPos.forEach((position, index) => {
       removeShark(position)
     })
-
+    clearInterval(timer)
+    clearInterval(timer2)
+    // clearInterval(timer2)
+    // clearInterval(timer3)
+    removeCrab(playerCurrentPos)
+    // cells.forEach((position, index) => {
+    //   removeEnemyFire(position)
+    // })
+    // 
     setTimeout(() => {
+      console.log('alert')
       // Alert score
       alert(score)
       // Update high score
-    }, 50)
+    }, 100)
   }
 
 
