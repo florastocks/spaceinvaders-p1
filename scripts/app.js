@@ -230,57 +230,49 @@ function init() {
               }
             }
           }
-          // enemyFire()
+          enemyFire()
       }, 1000)
       
     }
 
 
   //! --- Fire From -- 
-  // function enemyFire(){
+  function enemyFire(){
 
-    // let fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
-    // // console.log('player firing')
-    // // let timer3
-    // let enemyShot = enemyCurrentPos[fireFrom] + width
-    // // console.log(enemyShot, fireFrom)
-    // // clearInterval(timer3)
-    // enemyShoot(enemyShot)
-    // // if(enemyShot < cellCount - width){
-    //   // removeEnemyFire(enemyShot)
-    //   timer3 = setInterval(() => {
-          
-    //       if(enemyShot + width >= cellCount - width){
-    //         removeEnemyFire(enemyShot)
-    //       }
-    //       removeEnemyFire(enemyShot)
-    //       enemyShot += width
-          
+    let fireFrom = Math.floor(Math.random() * enemyCurrentPos.length)
+    // console.log('player firing')
+    let timer3
+    let enemyShot = enemyCurrentPos[fireFrom] + width
+    // console.log(enemyShot, fireFrom)
+    // clearInterval(timer3)
+    enemyShoot(enemyShot)
+    // if(enemyShot < cellCount - width){
+      // removeEnemyFire(enemyShot)
+      timer3 = setInterval(() => {
+          if (enemyShot >= cellCount - width){
+            clearInterval(timer3)
+            removeEnemyFire(enemyShot)
+            return
+          }
 
-    //       if(cells[enemyShot].classList.contains(playerChar)){
-    //           lives --
-    //           livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔' 
-    //           removeEnemyFire(enemyShot)
-    //           clearInterval(timer3)
-    //         }else if(lives === 0){
-    //           clearInterval(timer3)
-    //           return endGame()
-    //         }else{
-    //           enemyShoot(enemyShot)
-    //         }
-    //       }, 400)
-    //     }
-    // }else if(cells[enemyShot].classList.contains(playerChar)){
-    //   lives --
-    //   livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔' 
-    //   clearInterval(timer3)
-            // removeEnemyFire(enemyShot)
-    
-  
-            // console.log('enemy shot player')
-            // let target = enemyShot.indexOf(playerChar)
-            // console.log(target)
-            // removeCrab(target)
+          console.log(enemyShot)
+          removeEnemyFire(enemyShot)
+          enemyShot += width
+          
+          enemyShoot(enemyShot)
+
+          if(cells[enemyShot].classList.contains(playerChar)){
+            lives --
+            livesDisplay.innerHTML = lives ? '❤️'.repeat(lives) : '💔' 
+            clearInterval(timer3)
+            removeEnemyFire(enemyShot)
+          }
+          if(lives === 0){
+            clearInterval(timer3)
+            return endGame()
+          }
+          }, 400)
+        }
   
   //! --- End Game ---
   function endGame(){
@@ -290,19 +282,14 @@ function init() {
     })
     clearInterval(timer)
     clearInterval(timer2)
-    // clearInterval(timer2)
-    // clearInterval(timer3)
     removeCrab(playerCurrentPos)
-    // cells.forEach((position, index) => {
-    //   removeEnemyFire(position)
-    // })
-    // 
+
     setTimeout(() => {
       console.log('alert')
       // Alert score
-      alert(score)
+      alert(`Game Over!!! Player scored ${score}! Refresh to Replay`)
       // Update high score
-    }, 100)
+    }, 50)
   }
 
 
