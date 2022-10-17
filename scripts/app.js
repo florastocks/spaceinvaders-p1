@@ -53,6 +53,7 @@ function init() {
   // ! Executions
   // ? functions
 
+  //! ---- Creating the Grid ----
   function createGrid(){
     for(let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
@@ -69,7 +70,7 @@ function init() {
   //loop through array and add shark to each position 
   //if enemy start pos includes i - then add shark and pass through i 
 
-  //! --- creating characters ------
+  //! --- Creating characters ------
   // * ---player---
   // //? add a player class to a cell
     function addCrab(position){
@@ -113,14 +114,11 @@ function init() {
       const keyCode = event.keyCode 
       const left = 37
       const right = 39
-    //remove player from previous position - prevent repeat
     removeCrab(playerCurrentPos)
 
       if (left === keyCode && playerCurrentPos % width !== 0){
-        // console.log('CLICKED LEFT')
         playerCurrentPos -= 1
       }else if (right === keyCode && playerCurrentPos % width !== width - 1){
-        // console.log('CLICKED RIGHT')
         playerCurrentPos += 1
         }
     addCrab(playerCurrentPos)
@@ -140,12 +138,10 @@ function init() {
     }
   // !
     function playerFire(event){
-        // console.log('player firing')
         const keyCode = event.keyCode
         const space = 32
         let timer2
         let shotCurrentPos = playerCurrentPos - width
-
         playerShoot(shotCurrentPos)
 
         if(space === keyCode){
@@ -156,20 +152,15 @@ function init() {
               removeShoot(shotCurrentPos)
               return
             }
-
             removeShoot(shotCurrentPos)
             shotCurrentPos -= width
-            // console.log('moved up')
-
             playerShoot(shotCurrentPos)
             if (enemyCurrentPos.length === 0){
-              console.log('enemy array is empty')
               clearInterval(timer2)
               alert('🤩!!!!PLAYER WINS!!!!🤩')
               endGame()
             }else if(enemyCurrentPos.includes(shotCurrentPos)){
               let hit = enemyCurrentPos.indexOf(shotCurrentPos)
-              // console.log(hit)
               enemyCurrentPos.splice(hit, 1)
               score += 50
               scoreDisplay.innerHTML = score
@@ -179,11 +170,8 @@ function init() {
           }, 200)
         }
       }
-      // create arrays for each position that the crab could be in - then if the array contais a shark - romove if from the sharl current pos array 
-      
-      //if 
 
-  // //! -- move the enemy around
+  // //! -- move the enemy around ---
     function startGame(){
       clearInterval(timer)
       
@@ -210,7 +198,7 @@ function init() {
                   return endGame()
                 }
             }
-        }else {// left
+        }else {
           let nextMove = enemyCurrentPos.every(index => index % width !== 0)
           if(nextMove){
             enemyCurrentPos.forEach((num, index) => {
@@ -232,7 +220,6 @@ function init() {
           }
           enemyFire()
       }, 750)
-      
     }
 
 

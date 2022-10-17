@@ -14,7 +14,7 @@
 --     num of aliens = width -3 
 
 -- moves the aliens 
---   hile loop - while divs contain aliens: 
+--   while loop - while divs contain aliens: 
 --     move aliens one div at time to the right - in an interval of 2 seconds 
 --     if divs 14 contain alien - run function shiftDown()
 --     then move aliens one div at a time to the left - interval of 2 seconds 
